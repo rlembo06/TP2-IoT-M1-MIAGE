@@ -28,7 +28,6 @@ Vue.use(MaterialDashboard);
 Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
 Vue.use(Notifications);
-//Vue.use(require("vue-moment"));
 
 Vue.prototype.$Chartist = Chartist;
 
