@@ -6,12 +6,8 @@
 import db from "../plugins/firestore.js";
 
 export default {
-	data: () => ({
-		//brightness: []
-		test: null,
-	}),
 	firestore: {
-        brightness: db.collection('brightness'),
+		brightness: db.collection('brightness'),
 	},
 }
 </script>

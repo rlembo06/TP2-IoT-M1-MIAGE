@@ -1,17 +1,24 @@
 <template>
-	<code>{{temperatures}}</code>
+    <div> 
+        <h4>All :</h4>
+        <code>{{temperatures}}</code>
+    </div>
 </template>
 
 <script>
-import db from "../plugins/firestore.js";
+import firestore from "../api/firestore_rest.js";
 
 export default {
-	data: () => ({
-		//temperatures: []
-		test: null,
-	}),
-	firestore: {
-        temperatures: db.collection('temperatures'),
-	},
+    data: () => ({
+        temperatures: []
+    }),
+    mounted() {
+        this.getTemperaturesDetails()
+    },
+    methods: {
+        async getTemperaturesDetails() {
+            this.temperatures = await firestore.getTemperatures();
+        }
+    }
 }
 </script>
