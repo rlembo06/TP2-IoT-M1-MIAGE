@@ -14,7 +14,7 @@
       </sidebar-link>
       <sidebar-link to="/brightness">
         <md-icon>brightness</md-icon>
-        <p>Luminausité</p>
+        <p>Luminosité</p>
       </sidebar-link>
       <!-- <sidebar-link to="/user">
         <md-icon>person</md-icon>
