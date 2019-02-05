@@ -1,5 +1,6 @@
 <template>
-  <md-card>
+  <div>
+    <!-- <md-card>
     <md-card-header class="card-chart" :data-background-color="dataBackgroundColor">
       <div :id="chartId" class="ct-chart"></div>
     </md-card-header>
@@ -11,7 +12,8 @@
     <md-card-actions md-alignment="left">
       <slot name="footer"></slot>
     </md-card-actions>
-  </md-card>
+  </md-card> -->
+  </div>
 </template>
 <script>
 export default {

@@ -1,63 +1,35 @@
 <template>
-    <div> 
-        <div>
-            <chart-card
-                :chart-data="temperatures.data"
-                :chart-type="'Line'"
-                data-background-color="blue">
-                <template slot="content">
-                    <h4 class="title">Températures</h4>
-                    <p class="category">
-                        {{temperatures.size}} derniers résultats
-                    </p>
-                </template>
-
-                <template slot="footer">
-                    <div class="stats">
-                    <md-icon>access_time</md-icon>
-                    Dernière mise à jour : {{lastUpdate}}
-                    </div>
-                </template>
-            </chart-card>
+    <div>
+        <div class="small">
+            <ve-line :data="chartData"></ve-line>
         </div>
     </div>
 </template>
 
 <script>
 import firestore from "../api/firestore_rest.js";
-import { ChartCard } from "@/components";
 import moment from "moment"
+import chartHelpers from "../helpers/chart.js";
 
 export default {
     data: () => ({
-        temperatures: {
-            data: {
-                labels: [],
-                series: [[]]
-            },
-            size: 0
+        chartData: {
+            columns: ['date', 'celsius'],
+            rows: []
         },
+        temperatures: null,
         lastUpdate: null,
         maxElements: 10,
+        sizeData: 0,
     }),
-    components: {
-        ChartCard,
-    },
     mounted() {
+        console.log("getTemperaturesChart / this.chartData BEFORE: ", this.chartData)
         this.getTemperaturesChart();
     },
     methods: {
         async getTemperaturesChart() {
-            const jsonObserver = await firestore.getTemperatures() || [];
-            const data = JSON.parse(JSON.stringify(jsonObserver)).documents;
-            data.length >= this.maxElements && data.slice(data.length - this.maxElements);
-            this.temperatures.size = data.length;
-            data.forEach(item => {
-                this.temperatures.data.labels.push(moment(item.createTime).format('h:mm:ss a'));
-                this.temperatures.data.series[0].push(item.fields.temperatureInCelsius.doubleValue);
-            });
-            this.lastUpdate = data[data.length - 1].createTime;
-            this.lastUpdate = moment(this.lastUpdate).format('MMMM Do YYYY, h:mm:ss a');
+            const { documents } = await firestore.getTemperatures();
+            this.chartData.rows = chartHelpers.temperaturesToChartLineData(documents, this.maxElements);
         }
     }
 }
