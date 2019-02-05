@@ -1,6 +1,11 @@
 import moment from "moment";
 
 export default {
+  lastUpdateTemperatures(documents) {
+    return moment(documents[documents.length - 1].createTime).format(
+      "MMMM Do YYYY, h:mm"
+    );
+  },
   temperaturesToChartLineData(documents, maxElements) {
     const result = [];
     documents.length >= maxElements &&
