@@ -8,6 +8,14 @@
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
+      <sidebar-link to="/temperatures">
+        <md-icon>temperatures</md-icon>
+        <p>Temperatures</p>
+      </sidebar-link>
+      <sidebar-link to="/brightness">
+        <md-icon>brightness</md-icon>
+        <p>Luminausité</p>
+      </sidebar-link>
       <!-- <sidebar-link to="/user">
         <md-icon>person</md-icon>
         <p>User Profile</p>

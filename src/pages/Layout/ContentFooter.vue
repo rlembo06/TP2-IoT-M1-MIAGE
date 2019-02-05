@@ -6,19 +6,10 @@
               <li>
                 <router-link :to="{path:'/dashboard'}">Home</router-link>
               </li>
+                <li>Victor MONSCH | Romain LEMBO</li>
                 <li>
-                    <a href="#">
-                        Company
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Portfolio
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Blog
+                    <a href="http://www.i3s.unice.fr/~menez/M1Miage/TP2/tp2.pdf" target="blank">
+                        Consignes
                     </a>
                 </li>
             </ul>
