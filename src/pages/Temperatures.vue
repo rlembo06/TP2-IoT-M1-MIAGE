@@ -51,7 +51,6 @@ export default {
         StatsCard
     },
     mounted() {
-        console.log("getTemperaturesChart / this.chartData BEFORE: ", this.chartData)
         this.getTemperaturesChart();
     },
     methods: {
