@@ -14,7 +14,7 @@ const routes = [
   {
     path: "/",
     component: DashboardLayout,
-    redirect: "/dashboard",
+    redirect: "/temperatures",
     children: [
       {
         path: "dashboard",
