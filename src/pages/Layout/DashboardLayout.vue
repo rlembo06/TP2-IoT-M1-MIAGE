@@ -4,9 +4,17 @@
 
     <side-bar>
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="/dashboard">
+      <!-- <sidebar-link to="/dashboard">
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
+      </sidebar-link> -->
+      <sidebar-link to="/temperatures">
+        <md-icon>temperatures</md-icon>
+        <p>Temperatures</p>
+      </sidebar-link>
+      <sidebar-link to="/brightness">
+        <md-icon>brightness</md-icon>
+        <p>Luminosité</p>
       </sidebar-link>
       <!-- <sidebar-link to="/user">
         <md-icon>person</md-icon>

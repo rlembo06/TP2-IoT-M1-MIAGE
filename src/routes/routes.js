@@ -1,18 +1,20 @@
 import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
 
 import Dashboard from "@/pages/Dashboard.vue";
-import UserProfile from "@/pages/UserProfile.vue";
+/* import UserProfile from "@/pages/UserProfile.vue";
 import TableList from "@/pages/TableList.vue";
 import Typography from "@/pages/Typography.vue";
 import Icons from "@/pages/Icons.vue";
 import Maps from "@/pages/Maps.vue";
-import Notifications from "@/pages/Notifications.vue";
+import Notifications from "@/pages/Notifications.vue"; */
+import Brightness from "@/pages/Brightness";
+import Temperatures from "@/pages/Temperatures";
 
 const routes = [
   {
     path: "/",
     component: DashboardLayout,
-    redirect: "/dashboard",
+    redirect: "/temperatures",
     children: [
       {
         path: "dashboard",
@@ -20,6 +22,16 @@ const routes = [
         component: Dashboard
       },
       {
+        path: "brightness",
+        name: "Brightness",
+        component: Brightness
+      },
+      {
+        path: "temperatures",
+        name: "Temperatures",
+        component: Temperatures
+      }
+      /* {
         path: "user",
         name: "User Profile",
         component: UserProfile
@@ -51,7 +63,7 @@ const routes = [
         path: "notifications",
         name: "Notifications",
         component: Notifications
-      },
+      } */
     ]
   }
 ];
