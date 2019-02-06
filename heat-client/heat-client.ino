@@ -60,13 +60,13 @@ void createTemperatureEntry(double temperature) {
   JsonObject& root = jsonBuffer.createObject(); 
   JsonObject& fields = jsonBuffer.createObject(); 
   JsonObject& temperatureInCelsius = jsonBuffer.createObject(); 
-  JsonObject& createDate = jsonBuffer.createObject(); 
+  JsonObject& macAddress = jsonBuffer.createObject(); 
 
   temperatureInCelsius["doubleValue"] = temperature;
   fields["temperatureInCelsius"] = temperatureInCelsius;
 
-  //createDate["timestampValue"] = (unsigned long)time(NULL);
-  //fields["createDate"] = createDate;
+  macAddress["stringValue"] = WiFi.macAddress();
+  fields["macAddress"] = macAddress;
   
   root["fields"] = fields;
 
@@ -74,8 +74,8 @@ void createTemperatureEntry(double temperature) {
   root.prettyPrintTo(jsonMessageBuffer, sizeof(jsonMessageBuffer));
   Serial.print("Attempting to create a document with a value of ");
   Serial.print(temperature);
-  //Serial.print(" at date ");
-  //Serial.print((unsigned long)time(NULL));
+  Serial.print(" from address ");
+  Serial.print(WiFi.macAddress());
   Serial.print(". \n");
   
   int httpStatus = client.POST(jsonMessageBuffer);
