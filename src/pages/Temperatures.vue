@@ -10,7 +10,8 @@
             <div class="md-layout-item">
                 <md-field>
                     <label>Seuil C°</label>
-                    <md-input v-model="limen" type="number" min="-20" max="40"></md-input>
+                    <md-input v-model="temperatureLimen" type="number" min="-20" max="40"></md-input>
+                    <md-button class="md-raised md-success" @click="setLimens()">Modifier</md-button>
                 </md-field>
             </div>
         </div>
@@ -48,6 +49,7 @@
 
 <script>
 import firestore from "../api/firestore_rest.js";
+import db from "../plugins/firestore.js"
 import moment from "moment"
 import chartHelpers from "../helpers/chart.js";
 import {StatsCard} from "@/components";
@@ -60,14 +62,15 @@ export default {
         },
         lastUpdate: null,
         maxElements: 10,
-        limen: 0,
+        temperatureLimen: 0,
+        brightnessLimen: 0,
     }),
     components: {
         StatsCard
     },
     mounted() {
         this.getTemperaturesChart();
-        this.getTemperatureLimen();
+        this.getLimens();
     },
     methods: {
         async getTemperaturesChart() {
@@ -76,10 +79,25 @@ export default {
             this.lastUpdate = chartHelpers.lastUpdateData(documents);
         },
 
-        async getTemperatureLimen() {
-            const { temperatureLimen } = await firestore.getLimens();
-            this.limen = temperatureLimen;
+        async getLimens() {
+            const { temperatureLimen, brightnessLimen } = await firestore.getLimens();
+            this.temperatureLimen = +temperatureLimen;
+            this.brightnessLimen = +brightnessLimen;
         },
+
+        async setLimens() {
+            try {
+                const response = await db.collection("configurations")
+                    .doc("cB1CljpmA9o0lRsUvuQh")
+                    .set({
+                        temperatureSwitch: +this.temperatureLimen,
+                        brightnessSwitch: +this.brightnessLimen,
+                    });            
+                this.getLimens();
+            } catch (error) {
+                console.error("[Temperatures/setTemperatureLimen]: ", error)
+            }
+        }
     }
 }
 </script>
