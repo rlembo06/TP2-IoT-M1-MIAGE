@@ -63,8 +63,8 @@ export default {
           });
         }
 
-        const columnExist = await columns.find(column => column == newDevice);
-        !columnExist && (await columns.push(newDevice));
+        const columnExist = columns.find(column => column === newDevice);
+        !columnExist && columns.push(newDevice);
       }
     });
 
