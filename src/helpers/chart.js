@@ -30,6 +30,7 @@ export default {
 
   chartLineData(dataName, documents, maxElements) {
     const datasets = [];
+    const columns = [];
 
     this.sortByDate(documents);
 
@@ -60,10 +61,13 @@ export default {
             }
           });
         }
+
+        const columnExist = await columns.find(column => column == newDevice);
+        !columnExist && (await columns.push(newDevice));
       }
     });
 
-    return datasets;
+    return { datasets, columns };
   }
 
   /* chartLineData(dataName, documents, maxElements) {

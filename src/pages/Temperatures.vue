@@ -67,7 +67,7 @@ export default {
             },
         },
         chartData: {
-            columns: ['date', "device1", "device2", "device3"],
+            columns: ['date'],
             rows: [
                 {date: "test", device1: 0, device2: 0, device3: 0}
             ]
@@ -97,9 +97,12 @@ export default {
 
         async getTemperaturesChart() {
             const { documents } = await firestore.getTemperaturesMock();
-            this.chartData.rows = chartHelpers.chartLineData("celsius", documents, this.maxElements);
-            console.log(this.chartData.rows)
-            //this.lastUpdate = chartHelpers.lastUpdateData(documents);
+            const { datasets, columns } = await chartHelpers.chartLineData("celsius", documents, this.maxElements);
+            this.chartData.rows = datasets;
+            this.chartData.columns = await this.chartData.columns.concat(columns);
+            this.chartSettings.labelMap = Object.assign({}, columns);
+            console.log("this.chartData: ", this.chartData)
+            console.log("this.chartSettings: ", this.chartSettings)
         },
 
         async getLimens() {
