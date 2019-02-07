@@ -1,26 +1,11 @@
 import moment from "moment";
 
 export default {
-  getRandomColor() {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  },
-
   sortByDate(documents) {
     return documents.sort(
       (a, b) => new Date(a.createTime) - new Date(b.createTime)
     );
   },
-
-  /* lastUpdateData(documents) {
-    return moment(documents[documents.length - 1].createTime).format(
-      "MMMM Do YYYY, h:mm"
-    );
-  }, */
 
   lastUpdateData(documents) {
     return moment(documents[documents.length - 1].createTime).format(
