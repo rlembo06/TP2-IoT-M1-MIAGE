@@ -60,20 +60,25 @@ export default {
         },
         lastUpdate: null,
         maxElements: 10,
-        limen: 10,
+        limen: 0,
     }),
     components: {
         StatsCard
     },
     mounted() {
         this.getTemperaturesChart();
+        this.getTemperatureLimen();
     },
     methods: {
         async getTemperaturesChart() {
-            console.log("!!")
             const { documents } = await firestore.getTemperatures();
             this.chartData.rows = chartHelpers.chartLineData("celsius", documents, this.maxElements);
             this.lastUpdate = chartHelpers.lastUpdateData(documents);
+        },
+
+        async getTemperatureLimen() {
+            const { temperatureLimen } = await firestore.getLimens();
+            this.limen = temperatureLimen;
         },
     }
 }

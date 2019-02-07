@@ -9,5 +9,21 @@ export default {
     } catch (error) {
       console.error("[API/firestore_rest/getTemperatures]: ", error);
     }
+  },
+
+  async getLimens() {
+    try {
+      const response = await fetch(`${URI}/configurations`);
+      const { documents } = await response.json();
+      const {
+        fields: {
+          brightnessSwitch: { integerValue: brightnessLimen },
+          temperatureSwitch: { integerValue: temperatureLimen }
+        }
+      } = documents[0];
+      return { brightnessLimen, temperatureLimen };
+    } catch (error) {
+      console.error("[API/firestore_rest/getLimens]: ", error);
+    }
   }
 };
