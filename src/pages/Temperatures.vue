@@ -4,7 +4,7 @@
             <ve-line :data="chartData"></ve-line>
         </div>
         <div class="md-layout">
-            <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
+            <div class="md-layout-item">
                 <stats-card data-background-color="green">
                     <template slot="header">
                         <md-icon >access_time</md-icon>
@@ -16,7 +16,7 @@
                     </template>
                 </stats-card>
             </div>
-            <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
+            <div class="md-layout-item">
                 <stats-card data-background-color="green">
                     <template slot="header">
                         <md-icon >assessment</md-icon>
@@ -56,8 +56,8 @@ export default {
     methods: {
         async getTemperaturesChart() {
             const { documents } = await firestore.getTemperatures();
-            this.chartData.rows = chartHelpers.temperaturesToChartLineData(documents, this.maxElements);
-            this.lastUpdate = chartHelpers.lastUpdateTemperatures(documents);
+            this.chartData.rows = chartHelpers.chartLineData("celsius", documents, this.maxElements);
+            this.lastUpdate = chartHelpers.lastUpdateData(documents);
         }
     }
 }
