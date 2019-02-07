@@ -15,21 +15,11 @@
                 </md-field>
             </div>
         </div>
-        <!-- <div class="small">
-            <ve-line 
-                :data="chartData" 
-                :settings="chartSettings"
-                :mark-point="markPoint">
-            </ve-line>
-        </div> -->
         <div class="small">
-            <p v-if="!loaded">Chargement ....</p>
-            <line-chart
-                v-if="loaded"
-                class="lineChart"
-                :chart-data="chartData"
-                :options="chartOptions">
-            </line-chart>
+            <ve-line 
+                :data="chartData"
+                :settings="chartSettings">
+            </ve-line>
         </div>
         <div class="md-layout">
             <div class="md-layout-item">
@@ -52,7 +42,7 @@
 
                     <template slot="content">
                         <p class="category">Nombre d'éléments</p>
-                        <h3 class="title">{{chartData.labels.length}}</h3>
+                        <!-- h3 class="title">{{chartData.rows.length}}</h3> -->
                     </template>
                 </stats-card>
             </div>
@@ -66,29 +56,21 @@ import db from "../plugins/firestore.js"
 import moment from "moment"
 import chartHelpers from "../helpers/chart.js";
 import {StatsCard} from "@/components";
-import LineChart from '../charts/LineChart'
 
 export default {
     data: () => ({
-        chartOptions: {
-            responsive: true,
-            maintainAspectRatio: false,
-            /* animation: {
-                duration: 0
+        chartSettings: {
+            labelMap: {
+                device1: "device1", 
+                device2: "device2", 
+                device3: "device3"
             },
-            hover: {
-                animationDuration: 0
-            },
-            responsiveAnimationDuration: 0 */
         },
         chartData: {
-          labels: [""],
-          datasets: [{
-            label: "",
-            borderColor: "white",
-            fill: false,
-            data: [0]
-          }]
+            columns: ['date', "device1", "device2", "device3"],
+            rows: [
+                {date: "test", device1: 0, device2: 0, device3: 0}
+            ]
         },
         loaded: false,
         lastUpdate: null,
@@ -98,20 +80,26 @@ export default {
     }),
     components: {
         StatsCard, 
-        LineChart
     },
     mounted() {
         this.getTemperaturesChart();
         this.getLimens();
     },
     methods: {
-        async getTemperaturesChart() {
+        /* async getTemperaturesChart() {
             const { documents } = await firestore.getTemperaturesMock();
             const { datasets, labels, lastUpdate } = await chartHelpers.chartLineData(documents);
             this.chartData.datasets = datasets;
             this.chartData.labels = labels;
             this.lastUpdate = lastUpdate;
             this.loaded = true;
+        }, */
+
+        async getTemperaturesChart() {
+            const { documents } = await firestore.getTemperaturesMock();
+            this.chartData.rows = chartHelpers.chartLineData("celsius", documents, this.maxElements);
+            console.log(this.chartData.rows)
+            //this.lastUpdate = chartHelpers.lastUpdateData(documents);
         },
 
         async getLimens() {

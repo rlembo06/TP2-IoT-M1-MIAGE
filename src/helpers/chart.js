@@ -28,7 +28,62 @@ export default {
     );
   },
 
-  chartLineData(documents) {
+  chartLineData(dataName, documents, maxElements) {
+    const datasets = [];
+
+    this.sortByDate(documents);
+
+    documents.forEach(async doc => {
+      const newDevice =
+        (await doc.fields.macAddress) &&
+        (await doc.fields.macAddress.stringValue)
+          ? await doc.fields.macAddress.stringValue
+          : null;
+
+      if (newDevice) {
+        const newDate = await moment(doc.createTime).format("h:mm:ss a");
+        const newValue = await doc.fields.temperatureInCelsius.doubleValue;
+
+        const datasetExist = datasets.find(
+          dataset => newDevice && dataset.date == newDate
+        );
+
+        if (!datasetExist) {
+          await datasets.push({
+            date: newDate,
+            [newDevice]: newValue
+          });
+        } else {
+          await datasets.forEach(async dataset => {
+            if (dataset.date == newDate) {
+              dataset[newDevice] = newValue;
+            }
+          });
+        }
+      }
+    });
+
+    return datasets;
+  }
+
+  /* chartLineData(dataName, documents, maxElements) {
+    const result = [];
+
+    this.sortByDate(documents);
+
+    if (documents.length >= maxElements) {
+      documents = documents.slice(documents.length - maxElements);
+    }
+
+    documents.forEach(doc => {
+      result.push({
+        date: moment(doc.createTime).format("h:mm:ss a"),
+        [dataName]: doc.fields.temperatureInCelsius.doubleValue
+      });
+    });
+  } */
+
+  /* chartLineData(documents) {
     const datasets = [];
     const labels = [];
 
@@ -69,5 +124,5 @@ export default {
     });
 
     return { datasets, labels, lastUpdate };
-  }
+  } */
 };
