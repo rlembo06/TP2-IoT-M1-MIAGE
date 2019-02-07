@@ -17,8 +17,7 @@
         </div>
         <div class="small">
             <ve-line 
-                :data="chartData"
-                :settings="chartSettings">
+                :data="chartData">
             </ve-line>
         </div>
         <div class="md-layout">
@@ -42,7 +41,7 @@
 
                     <template slot="content">
                         <p class="category">Nombre d'éléments</p>
-                        <!-- h3 class="title">{{chartData.rows.length}}</h3> -->
+                        <h3 class="title">{{chartData.rows.length}}</h3>
                     </template>
                 </stats-card>
             </div>
@@ -59,22 +58,12 @@ import {StatsCard} from "@/components";
 
 export default {
     data: () => ({
-        chartSettings: {
-            labelMap: {
-                device1: "device1", 
-                device2: "device2", 
-                device3: "device3"
-            },
-        },
         chartData: {
-            columns: ['date'],
-            rows: [
-                {date: "test", device1: 0, device2: 0, device3: 0}
-            ]
+            columns: [],
+            rows: []
         },
         loaded: false,
         lastUpdate: null,
-        maxElements: 10,
         temperatureLimen: 0,
         brightnessLimen: 0,
     }),
@@ -86,23 +75,13 @@ export default {
         this.getLimens();
     },
     methods: {
-        /* async getTemperaturesChart() {
-            const { documents } = await firestore.getTemperaturesMock();
-            const { datasets, labels, lastUpdate } = await chartHelpers.chartLineData(documents);
-            this.chartData.datasets = datasets;
-            this.chartData.labels = labels;
-            this.lastUpdate = lastUpdate;
-            this.loaded = true;
-        }, */
-
         async getTemperaturesChart() {
-            const { documents } = await firestore.getTemperaturesMock();
-            const { datasets, columns } = await chartHelpers.chartLineData("celsius", documents, this.maxElements);
+            //const { documents } = await firestore.getTemperaturesMock();
+            const { documents } = await firestore.getTemperatures();
+            const { datasets, columns, lastUpdate } = await chartHelpers.chartLineData(documents);
             this.chartData.rows = datasets;
-            this.chartData.columns = await this.chartData.columns.concat(columns);
-            this.chartSettings.labelMap = Object.assign({}, columns);
-            console.log("this.chartData: ", this.chartData)
-            console.log("this.chartSettings: ", this.chartSettings)
+            this.chartData.columns = columns;
+            this.lastUpdate = lastUpdate;
         },
 
         async getLimens() {

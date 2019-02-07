@@ -28,11 +28,12 @@ export default {
     );
   },
 
-  chartLineData(dataName, documents, maxElements) {
+  chartLineData(documents) {
     const datasets = [];
-    const columns = [];
+    const columns = ["date"];
 
     this.sortByDate(documents);
+    const lastUpdate = this.lastUpdateData(documents);
 
     documents.forEach(async doc => {
       const newDevice =
@@ -67,7 +68,7 @@ export default {
       }
     });
 
-    return { datasets, columns };
+    return { datasets, columns, lastUpdate };
   }
 
   /* chartLineData(dataName, documents, maxElements) {
