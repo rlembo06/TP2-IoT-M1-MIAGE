@@ -4,7 +4,10 @@
         <nav>
             <ul>
               <li>
-                <router-link :to="{path:'/dashboard'}">Home</router-link>
+                <router-link :to="{path:'/temperatures'}">Temperatures</router-link>
+              </li>
+              <li>
+                <router-link :to="{path:'/brightness'}">Luminosités</router-link>
               </li>
                 <li>Victor MONSCH | Romain LEMBO</li>
                 <li>
@@ -14,9 +17,6 @@
                 </li>
             </ul>
         </nav>
-        <div class="copyright text-center">
-          &copy; {{ new Date().getFullYear() }} <a href="https://www.creative-tim.com/?ref=mdf-vuejs" target="_blank">Creative Tim</a>, made with <i class="fa fa-heart heart"></i> for a better web
-        </div>
     </div>
   </footer>
 

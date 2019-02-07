@@ -6,23 +6,29 @@ export default {
       (a, b) => new Date(a.createTime) - new Date(b.createTime)
     );
   },
-  lastUpdateTemperatures(documents) {
+
+  lastUpdateData(documents) {
     return moment(documents[documents.length - 1].createTime).format(
       "MMMM Do YYYY, h:mm"
     );
   },
-  temperaturesToChartLineData(documents, maxElements) {
+
+  chartLineData(dataName, documents, maxElements) {
     const result = [];
-    documents.length >= maxElements &&
-      documents.slice(documents.length - maxElements);
 
     this.sortByDate(documents);
+
+    if (documents.length >= maxElements) {
+      documents = documents.slice(documents.length - maxElements);
+    }
+
     documents.forEach(doc => {
       result.push({
         date: moment(doc.createTime).format("h:mm:ss a"),
-        celsius: doc.fields.temperatureInCelsius.doubleValue
+        [dataName]: doc.fields.temperatureInCelsius.doubleValue
       });
     });
+
     return result;
   }
 };
