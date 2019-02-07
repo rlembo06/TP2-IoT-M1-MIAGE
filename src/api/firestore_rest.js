@@ -1,7 +1,18 @@
+//import temperaturesMock from "../mocks/temperatures.mock";
+import temperaturesMock from "../mocks";
+
 const URI =
   "https://firestore.googleapis.com/v1/projects/tp2-iot-m1-miage/databases/(default)/documents";
 
 export default {
+  async getTemperaturesMock() {
+    try {
+      return await Promise.resolve(temperaturesMock);
+    } catch (error) {
+      console.error("[API/firestore_rest/getTemperaturesMock]: ", error);
+    }
+  },
+
   async getTemperatures() {
     try {
       const response = await fetch(`${URI}/temperatures`);
