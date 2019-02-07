@@ -23,7 +23,7 @@ const routes = [
       },
       {
         path: "brightness",
-        name: "Brightness",
+        name: "Luminosités",
         component: Brightness
       },
       {
