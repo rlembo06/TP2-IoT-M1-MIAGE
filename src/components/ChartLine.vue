@@ -94,6 +94,8 @@ export default {
     },
     mounted() {
         this.getLimens();
+        this.chartData.rows = chartHelpers.sliceDatasets(this.chartData.rows)
+        console.log("Chartline / chartData: ", this.chartData)
     },
     methods: {
         async getLimens() {

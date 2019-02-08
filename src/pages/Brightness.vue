@@ -35,7 +35,8 @@ export default {
     methods: {
         async getChartData() {
             const { documents } = await firestore.getBrigthnesses();
-            const { datasets, columns, lastUpdate } = await chartHelpers.chartLineData(await documents, "brightnessInLux");
+            let { datasets, columns, lastUpdate } = await chartHelpers.chartLineData(await documents, "brightnessInLux");
+            //datasets = await chartHelpers.sliceDatasets(datasets)
             this.chartData.rows = datasets;
             this.chartData.columns = columns;
             this.lastUpdate = lastUpdate;
