@@ -3,7 +3,6 @@
         :chartData="chartData" 
         :limenType="limenType"
         :lastUpdate="lastUpdate"
-        :loaded="loaded"
         :getChartData="getChartData"/>
 </template>
 
@@ -15,7 +14,7 @@ import chartHelpers from "../helpers/chart.js";
 export default {
     data: () => ({
         documents: [],
-        limenType: '° C',
+        limenType: '°C',
         chartData: {
             columns: [],
             rows: []
