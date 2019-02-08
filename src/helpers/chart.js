@@ -7,18 +7,26 @@ export default {
     );
   },
 
-  lastUpdateData(documents) {
-    return moment(documents[documents.length - 1].createTime).format(
+  /* async lastUpdateData(documents) {
+    return await moment(documents[documents.length - 1].createTime).format(
       "MMMM Do YYYY, h:mm a"
     );
+  }, */
+
+  async lastUpdateData(documents) {
+    return documents.length > 0
+      ? await moment(documents[documents.length - 1].createTime).format(
+          "MMMM Do YYYY, h:mm a"
+        )
+      : null;
   },
 
-  chartLineData(documents) {
+  async chartLineData(documents) {
     const datasets = [];
     const columns = ["date"];
 
     this.sortByDate(documents);
-    const lastUpdate = this.lastUpdateData(documents);
+    const lastUpdate = await this.lastUpdateData(documents);
 
     documents.forEach(async doc => {
       const newDevice =
