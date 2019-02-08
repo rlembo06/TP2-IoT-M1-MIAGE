@@ -10,7 +10,6 @@
             <div class="md-layout-item">
                 <md-field>
                     <label>Seuil {{limenType}}</label>
-                    <!-- <md-input v-model="temperatureLimen" type="number" min="-20" max="40"></md-input> -->
                     <md-input v-model="limen" type="number" :min="minMax.min" :max="minMax.max"></md-input>
                     <md-button class="md-raised md-success" @click="setLimens()">Modifier</md-button>
                 </md-field>
@@ -101,7 +100,7 @@ export default {
             const { temperatureLimen, brightnessLimen } = await firestore.getLimens();
             this.temperatureLimen = +temperatureLimen;
             this.brightnessLimen = +brightnessLimen;
-            this.limen = this.limenType === "°C" ? temperatureLimen : brightnessLimen;
+            this.limen = this.limenType === '°C' ? temperatureLimen : brightnessLimen;
         },
 
         async setLimens() {
@@ -109,8 +108,8 @@ export default {
                 const response = await db.collection("configurations")
                     .doc("cB1CljpmA9o0lRsUvuQh")
                     .set({
-                        temperatureSwitch: +this.temperatureLimen,
-                        brightnessSwitch: +this.brightnessLimen,
+                        temperatureSwitch: this.limenType === '°C' ? +this.limen : +this.temperatureLimen,
+                        brightnessSwitch: this.limenType === 'LDR' ? +this.limen : +this.brightnessLimen,
                     });            
                 this.getLimens();
             } catch (error) {
