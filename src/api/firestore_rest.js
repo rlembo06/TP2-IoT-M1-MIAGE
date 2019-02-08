@@ -22,6 +22,15 @@ export default {
     }
   },
 
+  async getBrigthnesses() {
+    try {
+      const response = await fetch(`${URI}/brightnesses`);
+      return response.json();
+    } catch (error) {
+      console.error("[API/firestore_rest/getBrigthnesses]: ", error);
+    }
+  },
+
   async getLimens() {
     try {
       const response = await fetch(`${URI}/configurations`);

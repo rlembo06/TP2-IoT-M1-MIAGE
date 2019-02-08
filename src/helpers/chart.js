@@ -21,7 +21,7 @@ export default {
       : null;
   },
 
-  async chartLineData(documents) {
+  /* async chartLineData(documents) {
     const datasets = [];
     const columns = ["date"];
 
@@ -38,6 +38,49 @@ export default {
       if (newDevice) {
         const newDate = await moment(doc.createTime).format("h:mm:ss a");
         const newValue = await doc.fields.temperatureInCelsius.doubleValue;
+
+        const datasetExist = datasets.find(
+          dataset => newDevice && dataset.date == newDate
+        );
+
+        if (!datasetExist) {
+          await datasets.push({
+            date: newDate,
+            [newDevice]: newValue
+          });
+        } else {
+          await datasets.forEach(async dataset => {
+            if (dataset.date == newDate) {
+              dataset[newDevice] = newValue;
+            }
+          });
+        }
+
+        const columnExist = columns.find(column => column === newDevice);
+        !columnExist && columns.push(newDevice);
+      }
+    });
+
+    return { datasets, columns, lastUpdate };
+  } */
+
+  async chartLineData(documents, dataType) {
+    const datasets = [];
+    const columns = ["date"];
+
+    this.sortByDate(documents);
+    const lastUpdate = await this.lastUpdateData(documents);
+
+    documents.forEach(async doc => {
+      const newDevice =
+        (await doc.fields.macAddress) &&
+        (await doc.fields.macAddress.stringValue)
+          ? await doc.fields.macAddress.stringValue
+          : null;
+
+      if (newDevice) {
+        const newDate = await moment(doc.createTime).format("h:mm:ss a");
+        const newValue = await doc.fields[dataType].doubleValue;
 
         const datasetExist = datasets.find(
           dataset => newDevice && dataset.date == newDate

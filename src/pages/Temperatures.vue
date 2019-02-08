@@ -31,7 +31,7 @@ export default {
         async getChartData() {
             //const { documents } = await firestore.getTemperaturesMock();
             const { documents } = await firestore.getTemperatures();
-            const { datasets, columns, lastUpdate } = await chartHelpers.chartLineData(await documents);
+            const { datasets, columns, lastUpdate } = await chartHelpers.chartLineData(await documents, "temperatureInCelsius");
             this.chartData.rows = datasets;
             this.chartData.columns = columns;
             this.lastUpdate = lastUpdate;
