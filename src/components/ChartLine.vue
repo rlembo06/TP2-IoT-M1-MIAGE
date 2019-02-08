@@ -16,12 +16,9 @@
             </div>
         </div>
         <div class="small">
-            <!-- <p v-if="!loaded">Chargement...</p>
+            <p v-if="chartData.rows.length === 0">Chargement...</p>
             <ve-line 
-                v-if="loaded"
-                :data="chartData">
-            </ve-line> -->
-            <ve-line 
+                v-if="chartData.rows.length > 0"
                 :data="chartData">
             </ve-line>
         </div>
@@ -63,53 +60,34 @@ import {StatsCard} from "@/components";
 
 export default {
     data: () => ({
-        chartData: {
-            columns: [],
-            rows: []
-        },
-        loaded: false,
-        lastUpdate: null,
         temperatureLimen: 0,
         brightnessLimen: 0,
-        debouncedGetChartData: null,
     }),
-    props: ['documents', 'limenType'],
+    props: {
+        limenType: {
+            type: String,
+            default: ""
+        },
+        chartData: {
+            type: Object,
+            default: {
+                columns: [],
+                rows: []
+            }
+        },
+        lastUpdate: {
+            type: String,
+            default: ""
+        },
+        getChartData: Function,
+    },
     components: {
         StatsCard, 
     },
     mounted() {
-        this.getChartData();
         this.getLimens();
     },
-    /* watch: {
-        documents: (newData, oldData) => {
-            if(newData.length > 0 || newData !== oldData) {
-                //this.getChartData();
-                this.debouncedGetChartData();
-            }
-        }
-    }, */
     methods: {
-        async getChartData () {
-            //const { documents } = await firestore.getTemperaturesMock();
-            //const { documents } = await firestore.getTemperatures();
-            const { datasets, columns, lastUpdate } = await chartHelpers.chartLineData(await this.documents);
-            this.chartData.rows = datasets;
-            this.chartData.columns = columns;
-            this.lastUpdate = lastUpdate;
-            this.loaded = datasets.length > 0;
-        },
-        
-        /* async getChartData() {
-            //const { documents } = await firestore.getTemperaturesMock();
-            //const { documents } = await firestore.getTemperatures();
-            const { datasets, columns, lastUpdate } = await chartHelpers.chartLineData(await this.documents);
-            this.chartData.rows = datasets;
-            this.chartData.columns = columns;
-            this.lastUpdate = lastUpdate;
-            this.loaded = datasets.length > 0;
-        }, */
-
         async getLimens() {
             const { temperatureLimen, brightnessLimen } = await firestore.getLimens();
             this.temperatureLimen = +temperatureLimen;

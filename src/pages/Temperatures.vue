@@ -1,38 +1,42 @@
 <template>
-    <ChartLine :documents="documents" :limenType="limenType"/>
+    <ChartLine 
+        :chartData="chartData" 
+        :limenType="limenType"
+        :lastUpdate="lastUpdate"
+        :loaded="loaded"
+        :getChartData="getChartData"/>
 </template>
 
 <script>
 import firestore from "../api/firestore_rest.js";
 import ChartLine from "@/components/ChartLine";
+import chartHelpers from "../helpers/chart.js";
 
 export default {
     data: () => ({
         documents: [],
-        limenType: '° C'
+        limenType: '° C',
+        chartData: {
+            columns: [],
+            rows: []
+        },
+        lastUpdate: null,
     }),
     components: {
         ChartLine, 
     },
     mounted() {
-        this.getTemperatures();
+        this.getChartData();
     },
     methods: {
-        async getTemperatures() {
+        async getChartData() {
             //const { documents } = await firestore.getTemperaturesMock();
             const { documents } = await firestore.getTemperatures();
-            this.documents = await documents;
-        },
-
-        /* async getTemperatures() {
-            //const { documents } = await firestore.getTemperaturesMock();
-            //const { documents } = await firestore.getTemperatures();
-            const { datasets, columns, lastUpdate } = await chartHelpers.chartLineData(await this.documents);
+            const { datasets, columns, lastUpdate } = await chartHelpers.chartLineData(await documents);
             this.chartData.rows = datasets;
             this.chartData.columns = columns;
             this.lastUpdate = lastUpdate;
-            this.loaded = datasets.length > 0;
-        }, */
+        },
     }
 }
 </script>
