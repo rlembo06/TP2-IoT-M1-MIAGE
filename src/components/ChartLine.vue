@@ -11,7 +11,7 @@
                 <md-field>
                     <label>Seuil {{limenType}}</label>
                     <!-- <md-input v-model="temperatureLimen" type="number" min="-20" max="40"></md-input> -->
-                    <md-input v-model="limen" type="number" min="-20" max="40"></md-input>
+                    <md-input v-model="limen" type="number" :min="minMax.min" :max="minMax.max"></md-input>
                     <md-button class="md-raised md-success" @click="setLimens()">Modifier</md-button>
                 </md-field>
             </div>
@@ -80,6 +80,13 @@ export default {
         lastUpdate: {
             type: String,
             default: ""
+        },
+        minMax: {
+            type: Object,
+            default: {
+                min: 0,
+                max: 0
+            }
         },
         getChartData: Function,
     },

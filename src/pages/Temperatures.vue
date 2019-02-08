@@ -3,7 +3,8 @@
         :chartData="chartData" 
         :limenType="limenType"
         :lastUpdate="lastUpdate"
-        :getChartData="getChartData"/>
+        :getChartData="getChartData"
+        :minMax="minMax"/>
 </template>
 
 <script>
@@ -20,6 +21,10 @@ export default {
             rows: []
         },
         lastUpdate: null,
+        minMax: {
+            min: -40,
+            max: 40
+        }
     }),
     components: {
         ChartLine, 
