@@ -26,7 +26,9 @@ Un client web (développé en JavaScript avec le framework Vue.js) affiche les d
 Les données de températures ou de luminosités ont toutes un attribut temporel pour les afficher de manière chronologique dans un graphique.
 De plus, chaque valeur possède un attribut pour identifier de quelle carte ESP32 cela provient (Adresse MAC).
 
-Exemple : [URI de températures (Cliquer)](https://firestore.googleapis.com/v1/projects/tp2-iot-m1-miage/databases/(default)/documents/temperatures)
+Exemples : 
+- [URI de températures (Cliquer)](https://firestore.googleapis.com/v1/projects/tp2-iot-m1-miage/databases/(default)/documents/temperatures)
+- [URI de luminosités (Cliquer)](https://firestore.googleapis.com/v1/projects/tp2-iot-m1-miage/databases/(default)/documents/brightnesses)
 
 ![alt text](https://firebasestorage.googleapis.com/v0/b/tp2-iot-m1-miage.appspot.com/o/data-temperatures.png?alt=media&token=881811ba-e223-4980-a389-319899310aa3)
 
